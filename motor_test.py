@@ -1,4 +1,3 @@
-
 #May have to import another library depending on what pulsewidth the Vex  ESC accept
 #Will have backwards funtionality one of two ways
 #Way one is wiring the rear motors opposite of front motors making it rear wheel drive in either direction
@@ -10,21 +9,21 @@ import RPi.GPIO as GPIO #Pin setup for Entire Pi
 import time
 import curses #User Interface
 import serial
-#pin setup
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(13, GPIO.OUT)
-GPIO.setup(22, GPIO.OUT)
-GPIO.setup(15, GPIO.OUT)
-GPIO.setup(18, GPIO.OUT)
+#pin setup, allows the code to reference these pins later in the code
+GPIO.setmode(GPIO.BOARD) #.BOARD lets the pi know you are using the board numbers
+GPIO.setup(13, GPIO.OUT) #Declare GPIO pin 13
+GPIO.setup(22, GPIO.OUT) #Declare GPIO pin 22
+GPIO.setup(15, GPIO.OUT) #Declare GPIO pin 15
+GPIO.setup(18, GPIO.OUT) #Declare GPIO pin 18
 
 
 
-#motor varibles
-FR= GPIO.PWM(13,50)#Front Right Motor #The value 50 is the Frequency 
-FL= GPIO.PWM(22,50)#Front Left Motor #The value 12 is the GPIO pin
+#motor varibles, PWM is pulse width modulation
+FR= GPIO.PWM(13,50)#Front Right Motor #The value 50 is the Frequency (The front right motor must be connected to GPIO 13)
+FL= GPIO.PWM(22,50)#Front Left Motor #The value 22 is the GPIO pin
 RR= GPIO.PWM(15,50)#Rear Right Motor
 RL= GPIO.PWM(18,50)#Rear Left Motor
-FR.start(100)
+FR.start(100) #100 is the duty cycle
 FL.start(100)
 RR.start(100)
 RL.start(100)
@@ -36,10 +35,11 @@ screen.keypad(True)
 #User Interface
 #ser = serial.Serial("/dev/ttyUSB0", 115200)
 while True:
-  char = screen.getch()
+  char = screen.getch() # Get user input
 #  dy = str(ser.readline())[30:36]
 #  y = (dy)
 #  print(y)
+#  Takes input and tests if it is equal to the ASCII value, if so it moves in the direction printed
   if char == ord('k'):
     break
   elif char == ord('x'):
@@ -74,7 +74,7 @@ while True:
     RL.ChangeDutyCycle(10)
 #  elif y == -800:
 #    print("arrived")
-#cleanup
+#cleanup and wraps up the curses
 GPIO.cleanup
 curses.nobreak()
 screen.keypad(0)
