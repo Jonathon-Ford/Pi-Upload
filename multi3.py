@@ -245,30 +245,27 @@ if __name__ == "__main__":
     import time
     import curses #User Interface
     import serial
-    #pin setup
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(13, GPIO.OUT)
-    GPIO.setup(22, GPIO.OUT)
-    GPIO.setup(15, GPIO.OUT)
-    GPIO.setup(18, GPIO.OUT)
+    #pin setup, allows the code to reference these pins later in the code
+    GPIO.setmode(GPIO.BOARD) #.BOARD lets the pi know you are using the board numbers
+    GPIO.setup(13, GPIO.OUT) #Declare GPIO pin 13
+    GPIO.setup(22, GPIO.OUT) #Declare GPIO pin 22
+    GPIO.setup(15, GPIO.OUT) #Declare GPIO pin 15
+    GPIO.setup(18, GPIO.OUT) #Declare GPIO pin 18
 
 
 
-#motor varibles
-    FR= GPIO.PWM(13,50)#Front Right Motor #The value 50 is the Frequency 
-    FL= GPIO.PWM(22,50)#Front Left Motor #The value 12 is the GPIO pin
-    RR= GPIO.PWM(15,50)#Rear Right Motor
-    RL= GPIO.PWM(18,50)#Rear Left Motor
-    FR.start(100)
+#motor varibles, PWM is pulse width modulation
+    FR= GPIO.PWM(13,50) #Front Right Motor #The value 50 is the Frequency (The front right motor must be connected to GPIO 13)
+    FL= GPIO.PWM(22,50) #Front Left Motor #The value 22 is the GPIO pin
+    RR= GPIO.PWM(15,50) #Rear Right Motor
+    RL= GPIO.PWM(18,50) #Rear Left Motor
+    FR.start(100) #100 is the duty cycle
     FL.start(100)
     RR.start(100)
     RL.start(100)
-#curses setup
-#screen = curses.initscr()
-#curses.noecho()
-#curses.cbreak()
-#screen.keypad(True)
-#User Interface
+    
+    
+    #Get information from POZYX and if any value is greater than destination value keep moving
     print('...Loading...')
     while True:
        getUpdatedCoordinates()
